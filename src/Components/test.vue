@@ -1,5 +1,5 @@
 <template>
-  
+  <div>test maelle</div>
 </template>
 
 <script>
