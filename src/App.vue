@@ -2,7 +2,7 @@
 <div class="content">
     <header class="h-16 fixed top-0 left-0 right-0 flex items-center bg-black bg-opacity-70 z-50">
         <div class="absolute left-3">
-              <ArrowLeftIcon class="h-8 fill-white" @click="$router.go(-1)"></ArrowLeftIcon>
+              <ArrowLeftIcon class="h-8 fill-white hover:cursor-pointer" @click="$router.go(-1)"></ArrowLeftIcon>
         </div>
         <div class="absolute left-1/2 -translate-x-1/2">
             <Logo></Logo>
