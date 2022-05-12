@@ -1,9 +1,9 @@
 <template>
-  <main class="w-screen bg-Dark_gray min-h-screen h-fit flex flex-col items-center">
+  <div class="flex flex-col items-center">
       <CardEvent v-for="i in 15" :key="i"></CardEvent>
 
       <JoinBtn></JoinBtn>
-  </main>
+  </div>
 
 </template>
 
