@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import MenuView from '../views/MenuView.vue'
 import ProfilView from '../views/ProfilView.vue'
 import CreateEventView from '../views/CreateEventView.vue'
 import MyEventView from '../views/MyEventView.vue'
@@ -13,7 +12,6 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     { path: '/', name: 'HomeView', component: HomeView },
-    { path: '/Menu', name: 'MenuView', component: MenuView },
     { path: '/Profil', name: 'ProfilView', component: ProfilView },
     { path: '/Create', name: 'CreateEventView', component: CreateEventView },
     { path: '/MyEvent', name: 'MyEventView', component: MyEventView },
