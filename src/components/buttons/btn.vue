@@ -1,6 +1,6 @@
 <template>
   <div class="flex py-2 px-6 bg-Rose rounded-2xl text-white font-bebas-neue text-xl">
-      {{msg}}
+      <slot>{{msg}}</slot>
   </div>
 </template>
 
