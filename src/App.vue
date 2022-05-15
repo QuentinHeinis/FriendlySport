@@ -21,7 +21,7 @@
                 </div>
             
         </div>
-        <nav class="absolute top-0 h-screen flex flex-col bg-Dark_gray opacity-1 w-screen z-40" v-if="Menuopen" >
+        <nav class="absolute top-0 h-screen flex flex-col bg-Dark_gray opacity-1 w-full z-40" v-if="Menuopen" >
         <div class=" absolute right-3 top-4 h-8  w-8 flex flex-col justify-evenly hover:cursor-pointer"  @click="Menuopen = !Menuopen">
           <span class="w-8 h-1 bg-white rounded-md rotate-45"></span>
           <span class="w-8 h-1 bg-white rounded-md rotate-[135deg] absolute"></span>
