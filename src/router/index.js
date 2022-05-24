@@ -7,6 +7,7 @@ import FavView from '../views/FavView.vue'
 import CarteView from '../views/CarteView.vue'
 import FreePremiumView from '../views/FreePremiumView.vue'
 import ContactView from '../views/ContactView.vue'
+import EventView from '../views/EventView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,6 +20,7 @@ const router = createRouter({
     { path: '/Carte', name: 'CarteView', component: CarteView },
     { path: '/FreePremium', name: 'FreePremiumView', component: FreePremiumView },
     { path: '/Contact', name: 'ContactView', component: ContactView },
+    { path: '/Event/:id', name: 'EventView', component: EventView },
 
   ]
 })

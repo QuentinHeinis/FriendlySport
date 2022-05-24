@@ -14,7 +14,7 @@
           </div>
         </div>
         <div class="flex gap-5 mt-3">
-          <cardbutton>Voir</cardbutton>
+          <cardbutton><RouterLink :to="{name: 'EventView', params:{id:event.id}}">Voir</RouterLink></cardbutton>
           <cardbutton>Rejoindre</cardbutton>
         </div>
     </div>
@@ -28,10 +28,10 @@ export default {
     data() {
     return {
       
-          img:"/public/footimg.png",
       }
       },
       props:{
+          img:{Type: String,},
           name:{
             Type : String,
             default:"..."

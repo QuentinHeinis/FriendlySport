@@ -1,6 +1,9 @@
 <template>
   <div>
-    <h3>Carte</h3>
+    
+    <div class="w-full h-full object-fill flex">
+      <img src="../assets/carte.png" alt="carte">
+    </div>
   </div>
 
 </template>
