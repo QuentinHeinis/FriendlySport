@@ -163,6 +163,11 @@ export default {
                     image:this.user.image
                 });
             }
+            if(this.user.bio==''){
+                await updateDoc(doc(firestore, "user", document.id), {
+                    bio:''
+                });
+            }
             
         }
     },
