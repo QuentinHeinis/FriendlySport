@@ -64,7 +64,7 @@ export default {
                 image: '',
                 login: null,
                 niveau: null,
-                bio: ''
+                bio: 'Description'
             },
             imageData: null,
             refUser: null,
@@ -149,7 +149,21 @@ export default {
             }
             const firestore = getFirestore();
             console.log(document.id, "=>", document.data());
-            await updateDoc(doc(firestore, "user", document.id), this.user);
+            await updateDoc(doc(firestore, "user", document.id), {
+                niveau:this.user.niveau,
+                login: this.user.login,
+            });
+            if(this.user.bio){
+                await updateDoc(doc(firestore, "user", document.id), {
+                    bio:this.user.bio
+                });
+            }
+            if(this.user.image){
+                await updateDoc(doc(firestore, "user", document.id), {
+                    image:this.user.image
+                });
+            }
+            
         }
     },
     components: { Btn }
