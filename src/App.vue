@@ -28,19 +28,19 @@
                   <RouterLink :to="{name: 'ProfilView', params:{id:userInfo[0].uid}}" @click="Menuopen = !Menuopen">Mon profil - {{login}}</RouterLink>
               </li>
                   <!-- {name:'Profil', params:{id:user.id}} -->
-              <li>
+              <li v-if="isAdmin">
                   <RouterLink to="/Create" @click="Menuopen = !Menuopen">Créer un évènement</RouterLink>
               </li>
-              <li>
+              <li v-if="isAdmin">
                   <RouterLink to="/MyEvent" @click="Menuopen = !Menuopen">Mes évènements sportifs</RouterLink>
               </li>
-              <li>
+              <li v-if="isAdmin">
                   <RouterLink to="/Favoris" @click="Menuopen = !Menuopen">Favoris</RouterLink>
               </li>
               <li>
                   <RouterLink to="/Carte" @click="Menuopen = !Menuopen">Carte</RouterLink>
               </li>
-              <li>
+              <li v-if="isAdmin">
                   <RouterLink to="/Contact" @click="Menuopen = !Menuopen">Nous Contacter</RouterLink>
               </li>
               <li>
