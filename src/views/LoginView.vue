@@ -163,5 +163,8 @@ export default {
 </script>
 
 <style>
-
+input{
+    padding-left: .5rem;
+    padding-right: .5rem;
+}
 </style>
