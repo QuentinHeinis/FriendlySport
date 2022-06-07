@@ -1,8 +1,8 @@
 <template>
   <div class="profil">
     <div class="w-4/5 flex py-2 mx-auto  items-center my-6 relative">
-      <div class="w-24 h-24 bg-gray-400 rounded-full overflow-hidden object-cover">
-        <img :src="user.image" :alt="'photo de '+ user.login" class="w-full h-full" v-if="user.image">
+      <div class="w-24 h-24 bg-gray-400 rounded-full overflow-hidden">
+        <img :src="user.image" :alt="'photo de '+ user.login" class="w-full h-full object-cover">
       </div>
       <div class="pl-10 self-end text-white">
         <div class="font-bebas-neue text-3xl">{{user.login}}</div>
