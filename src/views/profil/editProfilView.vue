@@ -61,10 +61,10 @@ export default {
         return {
             listeNiveau: ["Débutant", "Occasionnel", "Régulier", "Amateur", "Confirmé", "Pro"],
             user: {
-                image: null,
+                image: '',
                 login: null,
                 niveau: null,
-                bio: null
+                bio: ''
             },
             imageData: null,
             refUser: null,
