@@ -16,7 +16,7 @@
             {{ message }}
             </div>
             <div class="text-white font-oswald flex justify-evenly">
-            <button class="text-center  font-light text-xs"  @click="SignIn=!SignIn">
+            <button class="text-center  font-light text-xs" type="button"  @click="SignIn=!SignIn">
                 Créer un compte
             </button>
             <button type="submit"><btn>Connexion</btn></button>
