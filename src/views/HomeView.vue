@@ -3,7 +3,7 @@
       <div v-for="i in 5" :key="i" class="w-4/5 h-44 overflow-hidden rounded-4xl relative my-2 is-loading"></div>
   </div>
   <div class="flex flex-col items-center" v-else>
-    <div class="w-4/5 h-44 overflow-hidden rounded-4xl relative my-2" v-for="event in ListeEvent" :key="event.id">
+    <div class="w-4/5 h-44 overflow-hidden rounded-4xl relative my-2" v-for="event in orderByName" :key="event.id">
       <div class="cardimg w-full h-full">
             <img :src="event.img" :alt="event.name" class="w-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
       </div>
@@ -91,12 +91,21 @@ export default {
           })
           })
       },
-        async deleteEvent(event){
-            const firestore = getFirestore();
-            const docRef = doc(firestore, "Event", event.id);
-            await deleteDoc(docRef);
-        },
+        // async deleteEvent(event){
+        //     const firestore = getFirestore();
+        //     const docRef = doc(firestore, "Event", event.id);
+        //     await deleteDoc(docRef);
+        // },
     },
+    computed:{
+      orderByName: function () {
+      return this.ListeEvent.sort(function (a, b) {
+        if (a.date > b.date) return -1;
+        if (a.date < b.date) return 1;
+        return 0;
+      });
+    },
+    }
 }
 </script>
 
