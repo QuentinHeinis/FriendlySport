@@ -6,24 +6,38 @@
       <span class="text-Orange font-bebas-neue text-4xl pt-9 absolute top-[2px] -z-10" aria-hidden="true">Créer un
         évènement</span>
     </div>
-    <form class="flex flex-col gap-5 text-white">
-      <select name="Sport" id="Sport" class="bg-Dark_gray2 h-10 rounded-3xl px-5 w-64 "
-        v-model="name">
-        <option selected disabled>Sélectionner un sport</option>
-        <option v-for="sports in ListeSport" :key="sports.id">
-            {{sports.nom}}
-        </option>
-      </select>
-      <select name="diff" id="diff" class="bg-Dark_gray2 h-10 rounded-3xl px-5" v-model="level" >
-        <option selected disabled>Sélectionner une difficulté</option>
-        <option v-for="diff in ListeDiff" :key="diff.id">{{ diff.level }}</option>
-      </select>
-      <input type="date" class="bg-Dark_gray2 h-10 rounded-3xl px-5" v-model="date">
-      <textarea name="description" id="desc" cols="30" rows="10" class="bg-Dark_gray2 p-5 rounded-3xl"
-        placeholder="Description" v-model="desc"></textarea>
-      <button class="w-max self-center" @click="createEvent()" title="Création" type="button">
-        <btn>Valider</btn>
-      </button>
+    <form class="flex flex-col gap-5 text-white" @submit.prevent="createEvent">
+      <div class="flex items-center gap-2">
+        <p class="flex-none w-1/5">Sport : </p>
+        <select name="Sport" id="Sport" class="bg-Dark_gray2 h-10 rounded-3xl px-5 w-64 "
+          v-model="name" required>
+          <option disabled>Sélectionner un sport</option>
+          <option v-for="sports in ListeSport" :key="sports.id">
+              {{sports.nom}}
+          </option>
+        </select>
+      </div>
+      <div class="flex items-center gap-2">
+        <p class="flex-none w-1/5">Difficulté : </p>
+        <select name="diff" id="diff" class="bg-Dark_gray2 h-10 rounded-3xl px-5" v-model="level" required>
+          <option disabled>Sélectionner une difficulté</option>
+          <option v-for="diff in ListeDiff" :key="diff.id">{{ diff.level }}</option>
+        </select>
+      </div>
+      <div class="flex items-center gap-2">
+        <p class="flex-none w-1/5">Sport : </p>
+        <input type="date" class="bg-Dark_gray2 h-10 rounded-3xl px-5" v-model="date" required>
+      </div>
+      <div class="flex items-center gap-2">
+        <p class="w-1/5">Nombre de personne : </p>
+        <input type="number" class="bg-Dark_gray2 h-10 rounded-3xl px-5" v-model="number" min="1" max="100" required>
+      </div>
+      <div class="flex items-center gap-2">
+        <p class="flex-none w-1/5">Description : </p>
+        <textarea name="description" id="desc" cols="30" rows="10" class="bg-Dark_gray2 w-full p-5 rounded-3xl"
+          placeholder="Description" v-model="desc" required></textarea>
+      </div>
+        <btn class="w-max self-center" type="sumbit">Valider</btn>
     </form>
   </div>
 
@@ -40,8 +54,11 @@ import {
     deleteDoc,      // Supprimer un document d'une collection
     onSnapshot,     // Demander une liste de documents d'une collection, en les synchronisant
     query,          // Permet d'effectuer des requêtes sur Firestore
+    where,
+    arrayUnion,
     orderBy         // Permet de demander le tri d'une requête query
     } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-firestore.js'
+import {getAuth} from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js'
 import btn from '../components/buttons/btn.vue'
 export default {
   name: 'CreateEventView',
@@ -50,18 +67,24 @@ export default {
     return {
       ListeSport:[],
       ListeDiff: [],
-        name: null,
-        level: null,
-        date:null,
-        desc: null,
-        img:null,
+      userid:' ',
+      name:null,
+      level: null,
+      date:null,
+      desc: null,
+      number:null,
+      
     }
   },
   mounted(){
+    this.getId();
     this.getSport();
     this.getDiff();
   },
   methods: {
+    async getId(){
+      this.userid = await getAuth().currentUser.uid;
+    },
     async getSport(){
       const firestore = getFirestore();
       const dbSport = collection(firestore, "Sports");
@@ -89,11 +112,24 @@ export default {
         name: this.name,
         date: this.date,
         desc: this.desc,
+        img:this.name+'.png',
+        creator:this.userid
+      })
+      const dbUsers = query(collection(firestore, "user"), where("uid","==", this.userid));
+      const querySnapshot = await getDocs(dbUsers);
+      querySnapshot.forEach((doc)=>{
+          this.creatorMark(doc, docRef.id);
       })
       console.log('document créé avec le id : ', docRef.id);
-      this.$router.push('/');
+      this.$router.push({name: 'HomeView'});
     },
-
+    async creatorMark(document, id){
+      const firestore = getFirestore();
+      console.log(document.id, "=>", document.data());
+      await updateDoc(doc(firestore, "user", document.id), {
+          events : arrayUnion(id)
+      });
+    }
   },
 }
 </script>
