@@ -1,7 +1,7 @@
 <template>
-  <div class="flex py-2 px-6 bg-Rose rounded-2xl text-white font-bebas-neue text-xl">
+  <button class="flex py-2 px-6 bg-Rose rounded-2xl text-white font-bebas-neue text-xl">
       <slot>{{msg}}</slot>
-  </div>
+  </button>
 </template>
 
 <script>
