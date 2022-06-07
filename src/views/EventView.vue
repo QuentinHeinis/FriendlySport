@@ -3,31 +3,45 @@
       <div class="w-full">
           <img :src="event.img" :alt="event.name" class="w-full h-auto">
       </div>
-      <div class="font-oswald text-base text-white min-h-[50vh] w-full bg-Dark_gray absolute bottom-0 rounded-t-3xl py-10 px-9">
-        <div class="flex justify-between">
-            <div>
-                <div class="relative font-bebas-neue text-4xl z-10">
-                    <h1 class="pl-[1px] text-white">{{ event.name }}</h1>
-                    <span class="absolute -z-10 top-[1px] text-Orange">{{ event.name }}</span>
+      <div class="font-oswald text-base text-white min-h-[50vh] w-full bg-Dark_gray absolute bottom-0 rounded-t-3xl justify-between flex flex-col py-10 px-9">
+            <div class="flex justify-between">
+                <div>
+                    <div class="relative font-bebas-neue text-4xl z-10">
+                        <h1 class="pl-[1px] text-white">{{ event.name }}</h1>
+                        <span class="absolute -z-10 top-[1px] text-Orange">{{ event.name }}</span>
+                    </div>
+                    <p class=" pl-2 first-letter:uppercase">{{event.difficulte}}</p>
                 </div>
-                <p class=" pl-2 first-letter:uppercase">{{event.difficulte}}</p>
+                <div class="flex gap-2">
+                    <CalendarIcon class="h-6 w-6"/>
+                    <p>{{event.date}}</p>
+                </div>
             </div>
-            <div class="flex gap-2">
-                <CalendarIcon class="h-6 w-6"/>
-                <p>{{event.date}}</p>
+
+            <div class="pt-7">
+                <p class="font-light first-letter:uppercase">{{event.desc}}</p>
             </div>
-        </div>
-
-        <div class="pt-7">
-            <p class="font-light first-letter:uppercase">{{event.desc}}</p>
-        </div>
-
-      </div>
+            <div>
+                <RouterLink :to="{name: 'ProfilView', params:{id:creator.uid}}" class="flex items-center font-light gap-1">
+                    <img :src="creator.image" :alt="creator.login" class="w-16 h-16 rounded-full">
+                    <p>Par {{creator.login}}</p>
+                </RouterLink>
+                <div class="flex justify-between">
+                    <div class="flex items-center gap-4 pl-9">
+                        <p>{{personnes}} / {{place}}</p> 
+                        <UserGroupIcon class="w-8 h-8"/>
+                        <button><AnnotationIcon class="w-8 h-8"/></button>
+                    </div>
+                    <btn class="w-fit">Rejoindre</btn>
+                </div>
+            </div>
+     </div>
   </div>
 </template>
 
 <script>
-import { CalendarIcon } from '@heroicons/vue/outline'
+import btn from '../components/buttons/btn.vue'
+import { CalendarIcon, UserGroupIcon, AnnotationIcon } from '@heroicons/vue/outline'
 // Bibliothèque Firestore : import des fonctions
 import { 
     getFirestore,   // Obtenir le Firestore
@@ -35,7 +49,7 @@ import {
     doc,            // Obtenir un document par son id
     getDocs,        // Obtenir la liste des documents d'une collection
     getDoc,
-    
+    where,
     addDoc,         // Ajouter un document à une collection
     updateDoc,      // Mettre à jour un document dans une collection
     deleteDoc,      // Supprimer un document d'une collection
@@ -57,17 +71,25 @@ export default {
     name:'EventView',
     data(){
         return{
+            place:10,
+            personnes:1,
             event:{
                 name:null,
                 img:null,
                 desc:null,
                 difficulte:null,
                 date:null,
+                creator:null,
+            },
+            creator:{
+                login:null,
+                image:null,
+                uid:'uid'
             },
             imageData:null,
         }
     },
-    components:{CalendarIcon},
+    components:{CalendarIcon, UserGroupIcon, AnnotationIcon, btn},
     mounted(){
         this.getEvent(this.$route.params.id);
     },
@@ -84,7 +106,8 @@ export default {
             }
             const storage = getStorage();
             const spaceRef = ref(storage, 'imgsport/'+this.event.img);
-          getDownloadURL(spaceRef)
+            this.getCreator(this.event.creator, firestore);
+            getDownloadURL(spaceRef)
             .then((url)=>{
                 this.event.img = url;
             })
@@ -92,10 +115,31 @@ export default {
                 console.log('erreur downloadurl', error);
             })
         },
-        dateFr(d){
-          let date = d.split('-');
-          return date[2]+'/'+date[1]+'/'+date[0];
-      }
+        async getCreator(creator, firestore){
+            const dbUsers = collection(firestore, "user");
+            const q = query(dbUsers, where("uid", "==", creator));
+            await onSnapshot(q, (snapshot) => {
+                let user = snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+                this.creator.login = user[0].login;
+                this.creator.image = user[0].image;
+                this.creator.uid = user[0].uid;
+                console.log("user", this.creator);
+                if(this.creator.image){
+                    const storage = getStorage();
+                    const spaceRef = ref(storage, "user/" + user[0].image);
+                    getDownloadURL(spaceRef)
+                        .then((url) => {
+                        this.creator.image = url;
+                    })
+                        .catch((error) => {
+                        console.log('erreur downloadurl', error);
+                    });
+                }
+            });
+        }
     },
 }
 </script>
