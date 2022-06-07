@@ -1,11 +1,11 @@
 <template>
 <div class="content">
-    <header class="h-16 fixed top-0 left-0 right-0 flex items-center bg-black bg-opacity-70 z-30">
+    <header class="h-16 fixed top-0 left-0 right-0 flex items-center bg-black bg-opacity-70 z-30" :class="!logged && 'bg-transparent'">
         <div class="flex w-full px-3 justify-between">
             <RouterLink to="/">
-                <HomeIcon class="h-8 fill-white"></HomeIcon>
+                <HomeIcon class="h-8 fill-white" v-if="logged"></HomeIcon>
             </RouterLink>
-            <div class="h-8  w-8 flex flex-col justify-evenly hover:cursor-pointer" @click="Menuopen = !Menuopen">
+            <div class="h-8  w-8 flex flex-col justify-evenly hover:cursor-pointer" @click="Menuopen = !Menuopen" v-if="logged">
                 <span class="w-8 h-1 bg-white rounded-md"></span>
                 <span class="w-8 h-1 bg-white rounded-md"></span>
                 <span class="w-8 h-1 bg-white rounded-md"></span>
@@ -25,8 +25,9 @@
                   <RouterLink to="/" @click="Menuopen = !Menuopen">Accueil</RouterLink>
               </li>
               <li>
-                  <RouterLink to="/Profil" @click="Menuopen = !Menuopen">Mon Profil</RouterLink>
+                  <RouterLink :to="{name: 'ProfilView', params:{id:userInfo[0].uid}}" @click="Menuopen = !Menuopen">Mon profil - {{login}}</RouterLink>
               </li>
+                  <!-- {name:'Profil', params:{id:user.id}} -->
               <li>
                   <RouterLink to="/Create" @click="Menuopen = !Menuopen">Créer un évènement</RouterLink>
               </li>
@@ -40,13 +41,10 @@
                   <RouterLink to="/Carte" @click="Menuopen = !Menuopen">Carte</RouterLink>
               </li>
               <li>
-                  <RouterLink to="/FreePremium" @click="Menuopen = !Menuopen">Premium & Avantages</RouterLink>
-              </li>
-              <li>
                   <RouterLink to="/Contact" @click="Menuopen = !Menuopen">Nous Contacter</RouterLink>
               </li>
               <li>
-                  <div @click="onDcnx()">déconnexion</div>
+                  <RouterLink to="/" @click="onDcnx(), Menuopen =!Menuopen">déconnexion</RouterLink>
               </li>
           </ul>
       </nav>
@@ -54,58 +52,7 @@
 
     <main class="bg-Dark_gray min-h-screen h-fit w-screen">
         <RouterView v-if="logged"/>
-        <form @submit.prevent="onCnx()" class="w-4/5 m-auto mt-4" v-if="!logged && !SignIn">
-            <div class="mb-3 flex rounded-sm overflow-hidden">            
-                <div class="h-full bg-white text-black p-1 w-1/4 min-w-fit">
-                    <span>Email :</span>
-                </div>
-                <input type="text" class="w-full" v-model="user.email" required />
-            </div>
-            <div class="flex mb-3 rounded-sm overflow-hidden">
-                <div class="bg-white text-black p-1 w-1/4 min-w-fit">
-                    <span>Mot de passe :</span>
-                </div>
-                <input type="password" class="w-full" v-model="user.password" required />
-            </div>
-            <div class="bg-yellow-100 text-center mb-3 py-2" v-if="message!=null" >
-            {{ message }}
-            </div>
-            <div class="text-white font-oswald flex justify-evenly">
-            <button class="text-center  font-light text-xs"  @click="SignIn=!SignIn">
-                Créer un compte
-            </button>
-            <button type="submit"><btn>Connexion</btn></button>
-            </div>
-        </form>
-        <form @submit.prevent="onCreate()" class="w-4/5 m-auto mt-4" v-if="!logged && SignIn">
-            <div class="mb-3 flex rounded-sm overflow-hidden">            
-                <div class="h-full bg-white text-black p-1 w-1/4 min-w-fit">
-                    <span>Email :</span>
-                </div>
-                <input type="text" class="w-full" v-model="user.email" required />
-            </div>
-            <div class="flex mb-3 rounded-sm overflow-hidden">
-                <div class="bg-white text-black p-1 w-1/4 min-w-fit">
-                    <span>Mot de passe :</span>
-                </div>
-                <input type="password" class="w-full" v-model="user.password" required />
-            </div>
-            <div class="flex mb-3 rounded-sm overflow-hidden" >
-                <div class="bg-white text-black p-1 w-1/4 min-w-fit">
-                    <span>Répéter le Mot de passe :</span>
-                </div>
-                <input type="password" class="w-full" v-model="user.password2" required />
-            </div>
-            <div class="bg-yellow-100 text-center mb-3 py-2" v-if="message!=null" >
-            {{ message }}
-            </div>
-            <div class="text-white font-oswald flex justify-evenly">
-            <button class="text-center  font-light text-xs" @click="SignIn=!SignIn">
-                Se Connecter
-            </button>
-            <button type="submit"><btn>Créer</btn></button>
-            </div>
-        </form>
+        <LoginView v-if="!logged"></LoginView>
     </main>
 </div>
 </template>
@@ -116,96 +63,100 @@ import Logo from "./components/Logo.vue"
 import router from "./router"
 import LoginView from "./views/LoginView.vue"
 import btn from './components/buttons/btn.vue'
+import { emitter } from "./main.js"
 import {
-    getAuth, 
-    signInWithEmailAndPassword, 
-    createUserWithEmailAndPassword,
-    inMemoryPersistence,
-    GoogleAuthProvider,
-    signInWithRedirect,
-    signOut,
-    setPersistence, 
-    onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js'
+getFirestore,
+collection,
+onSnapshot,
+query,
+where
+} from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-firestore.js'
+
+import {
+getAuth,
+signOut
+} from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js'
 
 export default {
   components: {ArrowLeftIcon, HomeIcon, Logo, LoginView,  btn},
   data(){
       return{
-          Menuopen:false,
-          SignIn:false,
-          user:{
-              password:null,
-              email:null,
-              password2:null,
-          },
-          message:null,
-          logged:true,
+        Menuopen:false,
+        user:{
+            password:null,
+            email:null,
+            login:null,
+            id:null,
+        },
+        login:'',
+        logged:false,  
+        userInfo:null,
+        isAdmin:false
       }
   },
+  mounted(){
+    this.getUserConnect();
+
+
+    emitter.on('connectUser', e =>{
+      this.user = e.user;
+      console.log('App => Reception user connecté', this.user);
+      this.getUserInfo(this.user);
+    })
+    emitter.on('deConnectUser', e =>{
+      this.user = e.user;
+      console.log('App => Reception user deconnecté', this.user);
+      this.userInfo = null,
+      this.isAdmin = false,
+      this.logged = false
+    })
+  },
   methods:{
-        onCnx(){
-            signInWithEmailAndPassword(getAuth(), this.user.email, this.user.password)
-            .then((response)=>{
-                console.log('user connecté', response.user);
-                this.user = response.user;
-                this.message = "User connecté : " +this.user.email;
-                this.logged = true;
-            })
-            .catch((error)=>{
-                console.log('erreur de connexion', error);
-                this.message = "Erreur d'authentification";
-            })
+        async getUserConnect(){
+        await getAuth().onAuthStateChanged(function(user){
+            if(user){
+                this.user = user;
+                this.getUserInfo(this.user);
+            }
+        }.bind(this));
+        },
+        async getUserInfo(user){
+        const firestore = getFirestore();
+        const dbUsers = collection(firestore, "user");
+        const q = query(dbUsers, where("uid", "==", user.uid));
+        await onSnapshot(q, (snapshot)=>{
+            this.userInfo = snapshot.docs.map(doc=>({
+            id:doc.id, ...doc.data()
+            }));
+            // console.log("userInfo", this.userInfo);
+            this.login = this.userInfo[0].login;
+            this.isAdmin = this.userInfo[0].admin;
+            this.logged = true;
+            // const storage = getStorage();
+            // const spaceRef = ref(storage, 'users/'+this.userInfo[0].avatar);
+            // getDownloadURL(spaceRef)
+            // .then((url)=>{
+            //     this.avatar = url;
+            // })
+            // .catch((error)=>{
+            //     console.log('erreur downloadUrl', error);
+            // })
+        });
         },
         onDcnx(){
             signOut(getAuth())
             .then(response =>{
-                this.user = getAuth().currentUser;
+                this.message = "User non connecté";
                 this.user = {
                     email:null,
-                    password:null,
+                    password:null
                 };
-                console.log("User deconnecté ", this.user);
-                this.message = 'User non connecté';
-                this.Menuopen = !this.Menuopen;
-                this.logged = false;
+                emitter.emit('deConnectUser', {user:this.user});
             })
             .catch(error=>{
                 console.log('erreur deconnexion', error);
             })
         },
-        onCreate(){
-            if(this.user.password===this.user.password2){
-                createUserWithEmailAndPassword(getAuth(), this.user.email, this.user.password)
-                    .then((response) => {
-                        // Signed in 
-                        const user = response.user;
-                        // ...
-                    })
-                    .catch((error) => {
-                        console.log('erreur création', error);
-                        this.message = "erreur de création";
-                        // ..
-               })
-            }else{
-                this.message = "password pas cohérent"
-                console.log('mdp mauvais')
-            }
-        },
-
-        keepLogin(){
-          if(this.keeper = true){
-              setPersistence(auth, inMemoryPersistence)
-              .then(() =>{
-                  const provider = new GoogleAuthProvider();
-                  return signInWithRedirect(auth,  provider);
-              })
-              .catch((error) => {
-                  console.log('erreurCode : '+ error.code);
-                  console.log('error message : ' + error.message);
-                  this.message = 'error message : ' + error.message;
-              })
-          }  
-        }
     },
   
 } 
