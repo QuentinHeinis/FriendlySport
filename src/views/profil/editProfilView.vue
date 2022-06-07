@@ -136,23 +136,6 @@ export default {
                 this.update(doc);
             })
             this.$router.push("/Profil/" + uid);
-            // querySnapshot.forEach((doc)=>{
-
-            //     updateDoc(doc, {
-            //         niveau:this.user.niveau,
-            //         bio:this.user.bio,
-            //         image:this.user.image,
-            //         login:this.user.login
-            //     })
-            // })
-            //
-
-
-            
-            // await updateDoc(q, {
-
-            // });
-            // 
         },
         async update(document){
             if(this.imgModifiee){
