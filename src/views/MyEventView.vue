@@ -18,8 +18,13 @@
               <p class="pl-[1px] text-white">{{ event.name }}</p>
               <span class="absolute -z-10 top-[1px] text-Orange">{{ event.name }}</span>
             </div>
-            <div class="text-white -mt-2 pl-10">
-                <span>{{event.difficulte}}</span>
+            <div class="flex pt-2 pl-2">
+              <div class="text-white -mt-2">
+                <span>{{event.date}}</span>
+              </div>
+              <div class="text-white -mt-2 pl-5">
+                  <span>{{event.difficulte}}</span>
+              </div>
             </div>
       </div>
       <div class="flex gap-5 mt-3">
