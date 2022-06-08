@@ -111,6 +111,7 @@ export default {
         difficulte: this.level,
         name: this.name,
         date: this.date,
+        nombre : this.number,
         desc: this.desc,
         img:this.name+'.png',
         creator:this.userid
