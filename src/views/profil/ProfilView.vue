@@ -1,24 +1,32 @@
 <template>
-  <div class="profil">
-    <div class="w-4/5 flex py-2 mx-auto  items-center my-6 relative">
-      <div class="w-24 h-24 bg-gray-400 rounded-full overflow-hidden">
-        <img :src="user.image" :alt="'photo de '+ user.login" class="w-full h-full object-cover">
+  <div class="profil flex flex-col justify-between h-[calc(100vh-4rem)]">
+    <div>
+        <div class=" flex py-2 mx-auto  items-center my-6 relative">
+        <div class="w-24 h-24 bg-gray-400 rounded-full overflow-hidden">
+          <img :src="user.image" :alt="'photo de '+ user.login" class="w-full h-full object-cover">
+        </div>
+        <div class="pl-10 self-end text-white">
+          <div class="font-bebas-neue text-3xl">{{user.login}}</div>
+          <div class="font-oswald font-light" v-if="user.niveau==null">Niveau de sport: Non défini</div>
+          <div class="font-oswald font-light" v-if="user.niveau">Niveau de sport: {{user.niveau}}</div>
+        </div>
+        <RouterLink :to="{name:'EditProfilView', params:{id:userid}}">
+          <PencilAltIcon class="stroke-white fill-white w-5 absolute right-0 top-0" v-if="userCheck" />
+        </RouterLink>
       </div>
-      <div class="pl-10 self-end text-white">
-        <div class="font-bebas-neue text-3xl">{{user.login}}</div>
-        <div class="font-oswald font-light" v-if="user.niveau==null">Niveau de sport: Non défini</div>
-        <div class="font-oswald font-light" v-if="user.niveau">Niveau de sport: {{user.niveau}}</div>
+      <div class="w-4/5 mx-auto">
+        <h3 class="font-bebas-neue text-3xl text-white mb-5">Description</h3>
+        <div class="max-h-[400px] min-h-[150px] bg-Dark_gray2 text-white font-oswald font-light px-4 py-2 rounded-xl"
+          v-if="user.bio==''">Description</div>
+        <div class="max-h-[400px] min-h-[150px] bg-Dark_gray2 text-white font-oswald font-light px-4 py-2 rounded-xl"
+          v-if="user.bio">{{user.bio}}</div>
       </div>
-      <RouterLink :to="{name:'EditProfilView', params:{id:userid}}">
-        <PencilAltIcon class="stroke-white fill-white w-5 absolute right-0 top-0" v-if="userCheck" />
-      </RouterLink>
     </div>
-    <div class="w-4/5 mx-auto">
-      <h3 class="font-bebas-neue text-3xl text-white mb-5">Description</h3>
-      <div class="max-h-[400px] min-h-[150px] bg-Dark_gray2 text-white font-oswald font-light px-4 py-2 rounded-xl"
-        v-if="user.bio==''">Description</div>
-      <div class="max-h-[400px] min-h-[150px] bg-Dark_gray2 text-white font-oswald font-light px-4 py-2 rounded-xl"
-        v-if="user.bio">{{user.bio}}</div>
+    <div>
+      <div class="w-4/5 mx-auto flex justify-around pb-6">
+        <RouterLink :to="{name: 'MyEventView', params:{id:this.$route.params.id}}"><cardbutton>Événements</cardbutton></RouterLink>
+        <RouterLink :to="{name: 'EvalView', params:{id:this.$route.params.id}}"><cardbutton>Évaluations</cardbutton></RouterLink>
+      </div>
     </div>
   </div>
 
@@ -58,9 +66,10 @@ import {
 } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js'
 
 import { PencilAltIcon } from '@heroicons/vue/solid'
+import Cardbutton from '../../components/buttons/cardbutton.vue'
 export default {
   name: 'ProfilView',
-  components: { PencilAltIcon },
+  components: { PencilAltIcon, Cardbutton },
   data() {
     return {
       user: {
