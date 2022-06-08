@@ -23,7 +23,7 @@
             </div>
             <div>
                 <RouterLink :to="{name: 'ProfilView', params:{id:creator.uid}}" class="flex items-center font-light gap-1">
-                    <img :src="creator.image" :alt="creator.login" class="w-16 h-16 rounded-full">
+                    <img :src="creator.image" :alt="creator.login" class="w-16 h-16 rounded-full object-cover">
                     <p>Par {{creator.login}}</p>
                 </RouterLink>
                 <div class="flex justify-between">

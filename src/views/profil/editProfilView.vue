@@ -157,17 +157,17 @@ export default {
                 await updateDoc(doc(firestore, "user", document.id), {
                     bio:this.user.bio
                 });
+            }else if(this.user.bio==''){
+                await updateDoc(doc(firestore, "user", document.id), {
+                    bio:''
+                });
             }
             if(this.user.image){
                 await updateDoc(doc(firestore, "user", document.id), {
                     image:this.user.image
                 });
             }
-            if(this.user.bio==''){
-                await updateDoc(doc(firestore, "user", document.id), {
-                    bio:''
-                });
-            }
+            
             
         }
     },

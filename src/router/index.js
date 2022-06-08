@@ -16,7 +16,7 @@ const router = createRouter({
     { path: '/Profil/:id', name: 'ProfilView', component: ProfilView },
     { path: '/EditProfil/:id', name: 'EditProfilView', component: EditProfilView },
     { path: '/Create', name: 'CreateEventView', component: CreateEventView },
-    { path: '/MyEvent', name: 'MyEventView', component: MyEventView },
+    { path: '/MyEvent/:id', name: 'MyEventView', component: MyEventView },
     { path: '/Favoris', name: 'FavView', component: FavView },
     { path: '/Carte', name: 'CarteView', component: CarteView },
     { path: '/Contact', name: 'ContactView', component: ContactView },
