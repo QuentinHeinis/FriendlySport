@@ -7,25 +7,26 @@
       <div class="cardimg w-full h-full">
             <img :src="event.img" :alt="event.name" class="w-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
       </div>
-      <div class="relative flex flex-col -top-full w-full z-10 pl-5 pt-3">
-          <div class="flex flex-col">
-            <div class="relative font-bebas-neue text-4xl">
-              <p class="pl-[1px] text-white">{{ event.name }}</p>
-              <span class="absolute -z-10 top-[1px] text-Orange">{{ event.name }}</span>
-            </div>
-            <div class="flex pt-2 pl-2">
-              <div class="text-white -mt-2">
+      <div class="relative  flex flex-col -top-full w-full z-10 pl-5 py-3 justify-between h-full">
+          <div>
+                <div class="relative font-bebas-neue text-4xl">
+                  <p class="pl-[1px] text-white">{{ event.name }}</p>
+                  <span class="absolute -z-10 top-[1px] text-Orange">{{ event.name }}</span>
+                </div>
+          </div>
+          <div>
+            <div class="flex pl-2">
+              <div class="text-white ">
                 <span>{{event.date}}</span>
               </div>
-              <div class="text-white -mt-2 pl-5">
+              <div class="text-white  pl-5">
                   <span>{{event.difficulte}}</span>
               </div>
             </div>
-      </div>
-      <div class="flex gap-5 mt-3">
-        <cardbutton><RouterLink :to="{name: 'EventView', params:{id:event.id}}">Voir</RouterLink></cardbutton>
-        <cardbutton>Rejoindre</cardbutton>
-      </div>
+          </div>
+          <div class="flex w-fit">
+            <cardbutton><RouterLink :to="{name: 'EventView', params:{id:event.id}}">Voir</RouterLink></cardbutton>
+          </div>
     </div>
     
   </div>
