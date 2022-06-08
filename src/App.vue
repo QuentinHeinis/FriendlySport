@@ -28,10 +28,10 @@
                   <RouterLink :to="{name: 'ProfilView', params:{id:userInfo[0].uid}}" @click="Menuopen = !Menuopen">Mon profil - {{login}}</RouterLink>
               </li>
                   <!-- {name:'Profil', params:{id:user.id}} -->
-              <li v-if="isAdmin">
+              <li>
                   <RouterLink to="/Create" @click="Menuopen = !Menuopen">Créer un évènement</RouterLink>
               </li>
-              <li v-if="isAdmin">
+              <li>
                   <RouterLink :to="{name: 'MyEventView', params:{id:userInfo[0].uid}}" @click="Menuopen = !Menuopen">Mes évènements sportifs</RouterLink>
               </li>
               <li v-if="isAdmin">
@@ -40,7 +40,7 @@
               <li>
                   <RouterLink to="/Carte" @click="Menuopen = !Menuopen">Carte</RouterLink>
               </li>
-              <li v-if="isAdmin">
+              <li>
                   <RouterLink to="/Contact" @click="Menuopen = !Menuopen">Nous Contacter</RouterLink>
               </li>
               <li>
