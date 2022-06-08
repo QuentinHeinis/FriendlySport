@@ -91,11 +91,6 @@ export default {
           })
           })
       },
-        // async deleteEvent(event){
-        //     const firestore = getFirestore();
-        //     const docRef = doc(firestore, "Event", event.id);
-        //     await deleteDoc(docRef);
-        // },
     },
     computed:{
       orderByName: function () {

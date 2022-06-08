@@ -32,7 +32,7 @@
                   <RouterLink to="/Create" @click="Menuopen = !Menuopen">Créer un évènement</RouterLink>
               </li>
               <li v-if="isAdmin">
-                  <RouterLink to="/MyEvent" @click="Menuopen = !Menuopen">Mes évènements sportifs</RouterLink>
+                  <RouterLink :to="{name: 'MyEventView', params:{id:userInfo[0].uid}}" @click="Menuopen = !Menuopen">Mes évènements sportifs</RouterLink>
               </li>
               <li v-if="isAdmin">
                   <RouterLink to="/Favoris" @click="Menuopen = !Menuopen">Favoris</RouterLink>
