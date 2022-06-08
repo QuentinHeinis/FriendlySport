@@ -3,7 +3,7 @@
       <div v-for="i in 5" :key="i" class="w-4/5 h-44 overflow-hidden rounded-4xl relative my-2 is-loading"></div>
   </div>
   <div class="flex flex-col items-center" v-else>
-    <div class="w-4/5 h-44 overflow-hidden rounded-4xl relative my-2" v-for="event in orderByName" :key="event.id">
+    <div class="w-4/5 h-44 overflow-hidden rounded-4xl relative my-2" v-for="event in sortRecent" :key="event.date">
       <div class="cardimg w-full h-full">
             <img :src="event.img" :alt="event.name" class="w-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
       </div>
@@ -13,8 +13,13 @@
               <p class="pl-[1px] text-white">{{ event.name }}</p>
               <span class="absolute -z-10 top-[1px] text-Orange">{{ event.name }}</span>
             </div>
-            <div class="text-white -mt-2 pl-10">
-                <span>{{event.difficulte}}</span>
+            <div class="flex pt-2 pl-2">
+              <div class="text-white -mt-2">
+                <span>{{event.date}}</span>
+              </div>
+              <div class="text-white -mt-2 pl-5">
+                  <span>{{event.difficulte}}</span>
+              </div>
             </div>
       </div>
       <div class="flex gap-5 mt-3">
@@ -62,15 +67,15 @@ export default {
         user:{
           email:null,
           password:null,
-        }
-
+        },
+        date:null,
       }
     },
     mounted(){
       this.getEventSynchro();
     },
     methods:{
-        
+
         async getEventSynchro(){
           const firestore = getFirestore();
           const dbEvent = collection(firestore, "Event");
@@ -93,13 +98,18 @@ export default {
       },
     },
     computed:{
-      orderByName: function () {
+      orderByDate: function () {
       return this.ListeEvent.sort(function (a, b) {
-        if (a.date > b.date) return -1;
-        if (a.date < b.date) return 1;
+        if (a.date < b.date) return -1;
+        if (a.date > b.date) return 1;
         return 0;
       });
     },
+    sortRecent:function(){
+      return this.orderByDate.filter(function(event){
+        return event.date >= new Date().toJSON().slice(0,10);
+      })
+    }
     }
 }
 </script>
