@@ -34,9 +34,6 @@
               <li>
                   <RouterLink :to="{name: 'MyEventView', params:{id:userInfo[0].uid}}" @click="Menuopen = !Menuopen">Mes évènements sportifs</RouterLink>
               </li>
-              <li v-if="isAdmin">
-                  <RouterLink to="/Favoris" @click="Menuopen = !Menuopen">Favoris</RouterLink>
-              </li>
               <li>
                   <RouterLink to="/Carte" @click="Menuopen = !Menuopen">Carte</RouterLink>
               </li>
