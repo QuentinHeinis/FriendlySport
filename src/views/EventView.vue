@@ -284,26 +284,7 @@ export default {
             const firestore = getFirestore();
             const dbChat = doc(firestore, 'Event', this.$route.params.id);
             await onSnapshot(dbChat, (snapshot)=>{
-                
-                if(this.chatData == null){
-                    let msg = {
-                        by:{
-                            login:'Système',
-                            uid:' '
-                            },
-                        contenu:{
-                        msg:'Vous pouvez écrire',
-                        le: this.date
-                        }
-                    }
-                    const firestore = getFirestore();
-                    const docRef =  doc(firestore, "Event", this.$route.params.id);
-                    updateDoc(docRef, {
-                        chat:arrayUnion(msg)
-                    });
-                }else{
                     this.chatData = snapshot.data().chat;
-                }
             })
         }
         

@@ -107,6 +107,16 @@ export default {
     async createEvent() {
       const firestore = getFirestore();
       const dbEvent = collection(firestore, "Event");
+      let msg = {
+          by:{
+              login:'Système',
+              uid:' '
+              },
+          contenu:{
+          msg:'Vous pouvez écrire',
+          le: this.date
+          }
+      }
       const docRef = await addDoc(dbEvent, {
         difficulte: this.level,
         name: this.name,
@@ -114,7 +124,9 @@ export default {
         nombre : this.number,
         desc: this.desc,
         img:this.name+'.png',
-        creator:this.userid
+        creator:this.userid,
+        chat:arrayUnion(msg),
+        participants:arrayUnion()
       })
       const dbUsers = query(collection(firestore, "user"), where("uid","==", this.userid));
       const querySnapshot = await getDocs(dbUsers);

@@ -102,18 +102,7 @@ export default {
         }
     },
     methods:{
-        // onCnx(){
-        //     signInWithEmailAndPassword(getAuth(), this.user.email, this.user.password)
-        //     .then((response)=>{
-        //         console.log('user connecté', response.user);
-        //         this.user = response.user;
-        //         this.message = "User connecté : " +this.user.email;
-        //     })
-        //     .catch((error)=>{
-        //         console.log('erreur de connexion', error);
-        //         this.message = "Erreur d'authentification";
-        //     })
-        // },
+
         onCnx(){
             signInWithEmailAndPassword(getAuth(), this.user.email, this.user.password)
             .then((response) =>{

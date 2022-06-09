@@ -128,19 +128,9 @@ export default {
             this.userInfo = snapshot.docs.map(doc=>({
             id:doc.id, ...doc.data()
             }));
-            // console.log("userInfo", this.userInfo);
             this.login = this.userInfo[0].login;
             this.isAdmin = this.userInfo[0].admin;
             this.logged = true;
-            // const storage = getStorage();
-            // const spaceRef = ref(storage, 'users/'+this.userInfo[0].avatar);
-            // getDownloadURL(spaceRef)
-            // .then((url)=>{
-            //     this.avatar = url;
-            // })
-            // .catch((error)=>{
-            //     console.log('erreur downloadUrl', error);
-            // })
         });
         },
         onDcnx(){
