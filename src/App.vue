@@ -150,7 +150,7 @@ export default {
 
 <style>
 main, header{
-    max-width: 750px;
+    max-width: 812px;
     margin-left: auto;
     margin-right: auto;
 }
