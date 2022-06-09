@@ -102,7 +102,7 @@ export default {
               evenement = this.refEvent.data();
               evenement.id = event;
           }else{
-              this.console.log("Event non existant");
+              //this.console.log("Event non existant");
           }
           const storage = getStorage();
           const spaceRef = ref(storage, 'imgsport/'+evenement.img);
@@ -111,7 +111,7 @@ export default {
               evenement.img = url;
           })
           .catch((error) => {
-              console.log('erreur downloadurl', error);
+              //console.log('erreur downloadurl', error);
           })
           this.ListeEvent.push(evenement)
         },

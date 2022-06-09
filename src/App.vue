@@ -27,7 +27,6 @@
               <li>
                   <RouterLink :to="{name: 'ProfilView', params:{id:userInfo[0].uid}}" @click="Menuopen = !Menuopen">Mon profil - {{login}}</RouterLink>
               </li>
-                  <!-- {name:'Profil', params:{id:user.id}} -->
               <li>
                   <RouterLink to="/Create" @click="Menuopen = !Menuopen">Créer un évènement</RouterLink>
               </li>
@@ -97,12 +96,12 @@ export default {
 
     emitter.on('connectUser', e =>{
       this.user = e.user;
-      console.log('App => Reception user connecté', this.user);
+      //console.log('App => Reception user connecté', this.user);
       this.getUserInfo(this.user);
     })
     emitter.on('deConnectUser', e =>{
       this.user = e.user;
-      console.log('App => Reception user deconnecté', this.user);
+      //console.log('App => Reception user deconnecté', this.user);
       this.userInfo = null,
       this.isAdmin = false,
       this.logged = false
@@ -141,7 +140,7 @@ export default {
                 emitter.emit('deConnectUser', {user:this.user});
             })
             .catch(error=>{
-                console.log('erreur deconnexion', error);
+                //console.log('erreur deconnexion', error);
             })
         },
     },

@@ -95,7 +95,7 @@ export default {
       const q = query(dbSport, orderBy('nom', 'asc'));
       await onSnapshot(q, (snapshot) => {
           this.ListeSport = snapshot.docs.map(doc => ({id:doc.id, ...doc.data()}));
-          console.log('liste sport : ',this.ListeSport);
+          //console.log('liste sport : ',this.ListeSport);
       })
       
     },
@@ -105,7 +105,7 @@ export default {
       const q = query(dbDiff, orderBy('level', 'asc'));
       await onSnapshot(q, (snapshot) => {
           this.ListeDiff = snapshot.docs.map(doc => ({id:doc.id, ...doc.data()}));
-          console.log('liste diff : ',this.ListeDiff);
+          //console.log('liste diff : ',this.ListeDiff);
       })
     },
     async createEvent() {
@@ -137,12 +137,12 @@ export default {
       querySnapshot.forEach((doc)=>{
           this.creatorMark(doc, docRef.id);
       })
-      console.log('document créé avec le id : ', docRef.id);
+      //console.log('document créé avec le id : ', docRef.id);
       this.$router.push({name: 'HomeView'});
     },
     async creatorMark(document, id){
       const firestore = getFirestore();
-      console.log(document.id, "=>", document.data());
+      //console.log(document.id, "=>", document.data());
       await updateDoc(doc(firestore, "user", document.id), {
           events : arrayUnion(id)
       });

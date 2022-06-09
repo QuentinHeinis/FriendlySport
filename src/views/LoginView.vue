@@ -107,12 +107,12 @@ export default {
             signInWithEmailAndPassword(getAuth(), this.user.email, this.user.password)
             .then((response) =>{
                 this.user = response.user;
-                console.log("user", this.user);
+                //console.log("user", this.user);
                 emitter.emit('connectUser', {user: this.user});
                 this.message = "user connecté : " + this.user.email;
             })
             .catch((error)=>{
-                console.log('erreur connexion', error);
+                //console.log('erreur connexion', error);
                 this.message = "erreur d'authentification";
             })
         },
@@ -126,13 +126,13 @@ export default {
                         // ...
                     })
                     .catch((error) => {
-                        console.log('erreur création', error);
+                        //console.log('erreur création', error);
                         this.message = "erreur de création";
                         // ..
                     })  
             }else{
                 this.message = "password pas cohérent"
-                console.log('mdp mauvais')
+                //console.log('mdp mauvais')
             }
         },
         async writeUserData(user){
@@ -144,7 +144,7 @@ export default {
                     uid: user.uid,
                     admin:false
                 })
-                console.log('document créé avec le id : ', docRef.id);
+                //console.log('document créé avec le id : ', docRef.id);
                 emitter.emit('connectUser', {user: this.user}); 
         }
     },

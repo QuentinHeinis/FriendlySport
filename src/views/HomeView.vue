@@ -127,7 +127,7 @@ export default {
       const q = query(dbSport, orderBy('nom', 'asc'));
       await onSnapshot(q, (snapshot) => {
           this.ListeSport = snapshot.docs.map(doc => ({id:doc.id, ...doc.data()}));
-          console.log('liste sport : ',this.ListeSport);
+          //console.log('liste sport : ',this.ListeSport);
       })
       
     },
@@ -147,7 +147,7 @@ export default {
                   sport.img = url;
               })
               .catch((error) =>{
-                  console.log('erreur download url', error);
+                  //console.log('erreur download url', error);
               })
           })
           })

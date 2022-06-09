@@ -185,7 +185,7 @@ export default {
         },
         async LeaveMark(document, id){
             const firestore = getFirestore();
-            console.log(document.id, "=>", document.data());
+            //console.log(document.id, "=>", document.data());
             await updateDoc(doc(firestore, "user", document.id), {
                 participe : arrayRemove(id)
             });
@@ -193,7 +193,7 @@ export default {
         async userJoined(id){
             const firestore = getFirestore();
             const docRef = doc(firestore, "Event", id);
-            console.log(docRef.id)
+            //console.log(docRef.id)
             await updateDoc(docRef, {
                 participants: arrayUnion(this.user.uid)
             })
@@ -207,7 +207,7 @@ export default {
         },
         async joineMark(document, id){
             const firestore = getFirestore();
-            console.log(document.id, "=>", document.data());
+            //console.log(document.id, "=>", document.data());
             await updateDoc(doc(firestore, "user", document.id), {
                 participe : arrayUnion(id)
             });
@@ -220,7 +220,7 @@ export default {
                 this.event = this.refEvent.data();
                 this.personnes = this.event.participants.length + 1;
             }else{
-                this.console.log("Event non existant");
+                //this.console.log("Event non existant");
             }
             const storage = getStorage();
             const spaceRef = ref(storage, 'imgsport/'+this.event.img);
@@ -230,7 +230,7 @@ export default {
                 this.event.img = url;
             })
             .catch((error) => {
-                console.log('erreur downloadurl', error);
+                //console.log('erreur downloadurl', error);
             })
             
         },
@@ -245,7 +245,7 @@ export default {
                 this.creator.login = user[0].login;
                 this.creator.image = user[0].image;
                 this.creator.uid = user[0].uid;
-                console.log("user", this.creator);
+                //console.log("user", this.creator);
                 this.getUser(getAuth().currentUser.uid);
                 if(this.creator.image){
                     const storage = getStorage();
@@ -255,7 +255,7 @@ export default {
                         this.creator.image = url;
                     })
                         .catch((error) => {
-                        console.log('erreur downloadurl', error);
+                        //console.log('erreur downloadurl', error);
                     });
                 }
             });

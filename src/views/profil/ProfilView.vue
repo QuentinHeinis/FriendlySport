@@ -118,9 +118,9 @@ export default {
       this.userid = getAuth().currentUser.uid;
       if (this.userid == this.$route.params.id) {
         this.userCheck = true;
-        console.log('user propriétaire du compte')
+        //console.log('user propriétaire du compte')
       } else {
-        console.log('user non propriétaire du compte');
+        //console.log('user non propriétaire du compte');
       }
     }
   }

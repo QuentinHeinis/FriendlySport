@@ -112,7 +112,7 @@ export default {
                 this.user.niveau = user[0].niveau;
                 this.user.bio = user[0].bio;
                 this.user.image = user[0].image;
-                console.log("user", this.user);
+                //console.log("user", this.user);
                 if(this.user.image){
                     this.photoActuelle = this.user.image;
                     const storage = getStorage();
@@ -122,7 +122,7 @@ export default {
                         this.imageData = url;
                     })
                         .catch((error) => {
-                        console.log('erreur downloadurl', error);
+                        //console.log('erreur downloadurl', error);
                     });
                 }
             });
@@ -144,11 +144,11 @@ export default {
                 deleteObject(docRef);
                 docRef = ref(storage, 'user/'+this.user.image);
                 await uploadString(docRef, this.imageData, 'data_url').then((snapshot) =>{
-                    console.log('Uploaded a base64 string', this.user.image);
+                    //console.log('Uploaded a base64 string', this.user.image);
                 });
             }
             const firestore = getFirestore();
-            console.log(document.id, "=>", document.data());
+            //console.log(document.id, "=>", document.data());
             await updateDoc(doc(firestore, "user", document.id), {
                 niveau:this.user.niveau,
                 login: this.user.login,
