@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import NotFoundComponent from '../views/HomeView.vue'
 import ProfilView from '../views/profil/ProfilView.vue'
 import EditProfilView from '../views/profil/editProfilView.vue'
 import CreateEventView from '../views/CreateEventView.vue'
@@ -19,6 +20,8 @@ const router = createRouter({
     { path: '/Carte', name: 'CarteView', component: CarteView },
     { path: '/Contact', name: 'ContactView', component: ContactView },
     { path: '/Event/:id', name: 'EventView', component: EventView },
+
+    { path: '/:pathMatch(.*)', component: NotFoundComponent }
 
   ]
 })
