@@ -3,7 +3,16 @@
       <div v-for="i in 5" :key="i" class="w-4/5 h-44 overflow-hidden rounded-4xl relative my-2 is-loading"></div>
   </div>
   <div class="flex flex-col items-center" v-else>
-    <p class="pt-2 text-2xl text-white font-bebas-neue uppercase">évènements à venir</p>
+    <div class="w-4/5 flex justify-center items-center text-white mt-5 relative">
+      <input type="text" class="bg-Dark_gray2 h-10 rounded-3xl px-5 w-4/5" placeholder="Rechercher par sport" list="sport" v-model="query">
+      <datalist id="sport">
+          <option v-for="sports in ListeSport" :key="sports.id">
+              {{sports.nom}}
+          </option>
+        </datalist>
+      <SearchCircleIcon class="w-8 absolute right-[11%]"/>
+    </div>
+    <p class="pt-2 text-2xl text-white font-bebas-neue uppercase" v-if="sortRecent.length > 0">évènements à venir</p>
     <div class="w-4/5 h-44 overflow-hidden rounded-4xl relative my-2" v-for="event in sortRecent" :key="event.date">
       <div class="cardimg w-full h-full">
             <img :src="event.img" :alt="event.name" class="w-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
@@ -31,7 +40,7 @@
     </div>
     
     </div>
-    <p class="pt-2 text-2xl text-white font-bebas-neue uppercase">évènements passé</p>
+    <p class="pt-2 text-2xl text-white font-bebas-neue uppercase" v-if="sortOld.length > 0">évènements passé</p>
     <div class="w-4/5 h-44 overflow-hidden rounded-4xl relative my-2" v-for="event in sortOld" :key="event.date">
       <div class="cardimg w-full h-full">
             <img :src="event.img" :alt="event.name" class="w-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
@@ -69,6 +78,7 @@ import cardbutton from "../components/buttons/cardbutton.vue"
 import Header from "../components/Header.vue"
 import CardEvent from "../components/CardEvent.vue"
 import JoinBtn from "../components/buttons/btn.vue"
+import { SearchCircleIcon } from "@heroicons/vue/solid"
 import {
     getAuth, 
     signInWithEmailAndPassword, 
@@ -82,6 +92,9 @@ import {
     addDoc,
     updateDoc,
     deleteDoc,
+    query,
+    where,
+    orderBy,
     onSnapshot } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-firestore.js'
     import { 
     getStorage,             // Obtenir le Cloud Storage
@@ -90,21 +103,34 @@ import {
     uploadString,           // Permet d'uploader sur le Cloud Storage une image en Base64
 } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-storage.js'
 export default {
-    components: { Header, CardEvent, JoinBtn, cardbutton  },
+    components: { Header, CardEvent, JoinBtn, cardbutton, SearchCircleIcon  },
     data(){
       return{
+        ListeSport:[],
         ListeEvent:[],
         user:{
           email:null,
           password:null,
         },
         date:null,
+        query:'',
       }
     },
     mounted(){
       this.getEventSynchro();
+      this.getSport();
     },
     methods:{
+      async getSport(){
+      const firestore = getFirestore();
+      const dbSport = collection(firestore, "Sports");
+      const q = query(dbSport, orderBy('nom', 'asc'));
+      await onSnapshot(q, (snapshot) => {
+          this.ListeSport = snapshot.docs.map(doc => ({id:doc.id, ...doc.data()}));
+          console.log('liste sport : ',this.ListeSport);
+      })
+      
+    },
 
         async getEventSynchro(){
           const firestore = getFirestore();
@@ -136,13 +162,19 @@ export default {
       });
     },
     sortRecent:function(){
-      return this.orderByDate.filter(function(event){
+      return this.searchBySport.filter(function(event){
         return event.date >= new Date().toJSON().slice(0,10);
       })
     },
     sortOld:function(){
-      return this.orderByDate.filter(function(event){
+      return this.searchBySport.filter(function(event){
         return event.date < new Date().toJSON().slice(0,10);
+      })
+    },
+    searchBySport(){
+      let query = this.query;
+      return this.orderByDate.filter(function(sport){
+        return sport.name.includes(query);
       })
     }
     }
