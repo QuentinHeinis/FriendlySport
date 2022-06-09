@@ -5,7 +5,7 @@
   <div class="flex flex-col items-center" v-else>
     <div class="w-4/5 flex justify-center items-center text-white mt-5 relative">
       <input type="text" class="bg-Dark_gray2 h-10 rounded-3xl px-5 w-4/5" placeholder="Rechercher par sport" list="sport" v-model="query">
-      <datalist id="sport">
+      <datalist id="sport" class="appearance-none">
           <option v-for="sports in ListeSport" :key="sports.id">
               {{sports.nom}}
           </option>
