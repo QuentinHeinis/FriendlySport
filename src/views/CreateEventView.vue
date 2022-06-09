@@ -9,13 +9,12 @@
     <form class="flex flex-col gap-5 text-white" @submit.prevent="createEvent">
       <div class="flex items-center gap-2">
         <p class="flex-none w-1/5">Sport : </p>
-        <select name="Sport" id="Sport" class="bg-Dark_gray2 h-10 rounded-3xl px-5 w-64 "
-          v-model="name" required>
-          <option disabled>Sélectionner un sport</option>
+        <input type="text" list="listesport" v-model="name" class="bg-Dark_gray2 h-10 rounded-3xl px-5 w-64 " placeholder="Sélectionner un sport">
+        <datalist id="listesport">
           <option v-for="sports in ListeSport" :key="sports.id">
               {{sports.nom}}
           </option>
-        </select>
+        </datalist>
       </div>
       <div class="flex items-center gap-2">
         <p class="flex-none w-1/5">Difficulté : </p>
@@ -25,7 +24,7 @@
         </select>
       </div>
       <div class="flex items-center gap-2">
-        <p class="flex-none w-1/5">Sport : </p>
+        <p class="flex-none w-1/5">Jour : </p>
         <input type="date" class="bg-Dark_gray2 h-10 rounded-3xl px-5" v-model="date" required>
       </div>
       <div class="flex items-center gap-2">

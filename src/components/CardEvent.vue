@@ -48,13 +48,5 @@ export default {
 </script>
 
 <style>
-.cardimg:after{
-  content: '';
-    width: 100%;
-    height: 100%;
-    z-index: 100;
-    background: linear-gradient(90deg, rgba(0, 0, 0, .9) 0%, rgba(0, 0, 0, 0) 60%);
-    position: absolute;
-    z-index: 1;
-}
+
 </style>

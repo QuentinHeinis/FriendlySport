@@ -59,7 +59,7 @@ export default {
     name: "EditProfilView",
     data() {
         return {
-            listeNiveau: ["Débutant", "Occasionnel", "Régulier", "Amateur", "Confirmé", "Pro"],
+            listeNiveau: ["Débutant", "Occasionnel", "Régulier", "Amateur","Familiale", "Confirmé", "Pro"],
             user: {
                 image: '',
                 login: null,

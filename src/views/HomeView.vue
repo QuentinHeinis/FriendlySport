@@ -128,4 +128,14 @@ export default {
     background-size: 200% 100%;
     animation: 1.5s shine linear infinite;
   }
+
+  .cardimg:after{
+  content: '';
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, .3) 60%, rgba(0, 0, 0, 0) 100%);
+    position: absolute;
+    z-index: 1;
+}
 </style>
