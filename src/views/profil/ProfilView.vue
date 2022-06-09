@@ -25,7 +25,6 @@
     <div>
       <div class="w-4/5 mx-auto flex justify-around pb-6">
         <RouterLink :to="{name: 'MyEventView', params:{id:this.$route.params.id}}"><cardbutton>Événements</cardbutton></RouterLink>
-        <RouterLink :to="{name: 'EvalView', params:{id:this.$route.params.id}}"><cardbutton>Évaluations</cardbutton></RouterLink>
       </div>
     </div>
   </div>

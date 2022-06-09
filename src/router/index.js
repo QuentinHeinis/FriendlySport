@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ProfilView from '../views/profil/ProfilView.vue'
 import EditProfilView from '../views/profil/editProfilView.vue'
-import EvalView from '../views/profil/EvalView.vue'
 import CreateEventView from '../views/CreateEventView.vue'
 import MyEventView from '../views/MyEventView.vue'
 import FavView from '../views/FavView.vue'
@@ -16,7 +15,6 @@ const router = createRouter({
     { path: '/', name: 'HomeView', component: HomeView },
     { path: '/Profil/:id', name: 'ProfilView', component: ProfilView },
     { path: '/EditProfil/:id', name: 'EditProfilView', component: EditProfilView },
-    { path: '/Evaluations/:id', name: 'EvalView', component: EvalView },
     { path: '/Create', name: 'CreateEventView', component: CreateEventView },
     { path: '/MyEvent/:id', name: 'MyEventView', component: MyEventView },
     { path: '/Favoris', name: 'FavView', component: FavView },
