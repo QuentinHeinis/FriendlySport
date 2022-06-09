@@ -4,6 +4,7 @@
       <h1 class="text-white font-bebas-neue text-4xl pt-9 pl-[2px]">Les évènements de {{creator}}</h1>
       <span class="text-Orange font-bebas-neue text-4xl pt-9 absolute top-[2px] -z-10" aria-hidden="true">Les évènements de {{creator}}</span>  
     </div>
+  </div>
      <div class="flex flex-col items-center" v-if="ListeEvent.length < 1">
       <div v-for="i in 5" :key="i" class="w-4/5 h-44 overflow-hidden rounded-4xl relative my-2 is-loading"></div>
   </div>
@@ -32,7 +33,6 @@
       </div>
     </div>
     
-  </div>
   </div>
 </div>
 
