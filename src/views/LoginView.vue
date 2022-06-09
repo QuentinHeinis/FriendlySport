@@ -4,13 +4,13 @@
                 <div class="h-full bg-slate-200 text-black p-1 w-1/4 min-w-fit">
                     <span>Email :</span>
                 </div>
-                <input type="text" class="w-full" v-model="user.email" required />
+                <input type="text" class="w-full pl-2" v-model="user.email" required />
             </div>
             <div class="flex mb-3 rounded-sm overflow-hidden">
                 <div class="bg-slate-200 text-black p-1 w-1/4 min-w-fit">
                     <span>Mot de passe :</span>
                 </div>
-                <input type="password" class="w-full" v-model="user.password" required />
+                <input type="password" class="w-full pl-2" v-model="user.password" required />
             </div>
             <div class="bg-yellow-100 text-center mb-3 py-2" v-if="message!=null" >
             {{ message }}
@@ -27,25 +27,25 @@
                 <div class="h-full bg-slate-200 text-black p-1 w-1/4 min-w-fit">
                     <span>Login :</span>
                 </div>
-                <input type="text" class="w-full" v-model="user.login" required />
+                <input type="text" class="w-full pl-2" v-model="user.login" required />
             </div>
             <div class="mb-3 flex rounded-sm overflow-hidden">            
                 <div class="h-full bg-slate-200 text-black p-1 w-1/4 min-w-fit">
                     <span>Email :</span>
                 </div>
-                <input type="text" class="w-full" v-model="user.email" required />
+                <input type="text" class="w-full pl-2" v-model="user.email" required />
             </div>
             <div class="flex mb-3 rounded-sm overflow-hidden">
                 <div class="bg-slate-200 text-black p-1 w-1/4 min-w-fit">
                     <span>Mot de passe :</span>
                 </div>
-                <input type="password" class="w-full" v-model="user.password" required />
+                <input type="password" class="w-full pl-2" v-model="user.password" required />
             </div>
             <div class="flex mb-3 rounded-sm overflow-hidden" >
                 <div class="bg-slate-200 text-black p-1 w-1/4 min-w-fit">
                     <span>Répéter le Mot de passe :</span>
                 </div>
-                <input type="password" class="w-full" v-model="password2" required />
+                <input type="password" class="w-full pl-2" v-model="password2" required />
             </div>
             <div class="bg-yellow-100 text-center mb-3 py-2" v-if="message!=null" >
             {{ message }}
