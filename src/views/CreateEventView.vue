@@ -72,6 +72,7 @@ export default {
       date:null,
       desc: null,
       number:null,
+      heure:null
       
     }
   },
@@ -79,10 +80,14 @@ export default {
     this.getId();
     this.getSport();
     this.getDiff();
+    setInterval(() => this.getHour(), 1000);
   },
   methods: {
     async getId(){
       this.userid = await getAuth().currentUser.uid;
+    },
+    getHour(){
+            this.heure = new Date().toJSON().slice(0,10) + "-" +  new Date().getHours() + "-" + new Date().getMinutes()+ "-" + new Date().getSeconds();
     },
     async getSport(){
       const firestore = getFirestore();
@@ -113,7 +118,7 @@ export default {
               },
           contenu:{
           msg:'Vous pouvez écrire',
-          le: this.date
+          le: this.heure
           }
       }
       const docRef = await addDoc(dbEvent, {
